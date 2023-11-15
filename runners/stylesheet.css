@@ -1,0 +1,59 @@
+body{
+  background: darkgray;
+}
+
+h1{
+	background: darkred;
+	color: white;
+	font-size: 50px;
+	text-align: center;
+	padding: 40px;
+  margin: 0px;
+}
+
+h2{
+  background: #EEEEEE;
+  color: #B5040C;
+  border: 3px solid #CCCCCC;
+  margin: 10px 0px 0px 5px;
+  padding: 10px;
+  font-size: 40px;
+  font-family: Fantasy;
+}
+
+th{
+  background: #222222;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 30px;
+  margin: 0px;
+}
+
+td{
+  background: white;
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  font-size: 20px;
+  border-top: 3px solid #888888;
+  border-bottom: 3px solid #888888;
+  margin: 0px;
+}
+
+table{
+  background: white;
+	border: 3px solid #888888;
+  margin: 0px 0px 0px 5px;
+  border-collapse: collapse;
+}
+
+.crossCountry{
+    display: inline-grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+    "."
+    ".";
+
+}
