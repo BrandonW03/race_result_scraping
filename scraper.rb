@@ -84,6 +84,7 @@ def get_nirca_xc(nirca_links, mech, school)
 end
 
 team = get_xc_races(nirca_xc_links, mech, school)
+team = team.sort{ |a, b| a.lastname <=> b.lastname}
 
 index_file = File.new("index.html", "w")
 index_file.syswrite("<!DOCTYPE html>\n<html lang=\"en\">\n\t<head>\n\t\t<title>Ohio State Running Club</title>\n\t\t<meta charset=\"utf-8\" />\n\t\t<link rel = \"stylesheet\" href = \"./runners/stylesheet.css\"/>\n\t</head>\n\t<body>\n\t\t<h1>Ohio State Running Club</h1>\n\t\t<table>\n\t\t\t<tr>\n\t\t\t\t<th>Roster</th>\n\t\t\t</tr>")
