@@ -51,6 +51,14 @@ def get_nirca_xc(nirca_links, mech, school)
 							end
 						end
 							
+						if(!osu_runner_sex.include?("\"M\""))
+							race_distance = "6000m"
+						end
+						
+						if(exists)
+							team.delete(curr_osu_runner)
+						end
+						
 						if(!exists && osu_runner_sex.include?("\"M\""))
 							curr_osu_runner = Runner.new(osu_runner_first_name, osu_runner_last_name, "Male")
 						elsif(!exists)
@@ -76,15 +84,21 @@ def get_nirca_xc(nirca_links, mech, school)
 end
 
 team = get_xc_races(nirca_xc_links, mech, school)
-FileUtils.mkdir_p 'runners'
+
+index_file = File.new("index.html", "w")
+index_file.syswrite("<!DOCTYPE html>\n<html lang=\"en\">\n\t<head>\n\t\t<title>Ohio State Running Club</title>\n\t\t<meta charset=\"utf-8\" />\n\t\t<link rel = \"stylesheet\" href = \"./runners/stylesheet.css\"/>\n\t</head>\n\t<body>\n\t\t<h1>Ohio State Running Club</h1>\n\t\t<table>\n\t\t\t<tr>\n\t\t\t\t<th>Roster</th>\n\t\t\t</tr>")
+
 
 team.each do |curr_runner|
 	curr_file = File.new("./runners/#{curr_runner.firstname}_#{curr_runner.lastname}.html", "w")
 	if curr_file
 	
+		index_file.syswrite("\n\t\t\t<tr>\n\t\t\t\t<td>\n\t\t\t\t\t<a href = \"./runners/#{curr_runner.firstname}_#{curr_runner.lastname}\">#{curr_runner.firstname} #{curr_runner.lastname}</a>\n\t\t\t\t</td>\n\t\t\t</tr>")
+		
 	   curr_file.syswrite("<!DOCTYPE html>\n<html lang=\"en\">\n\t<head>\n\t\t<title>#{curr_runner.firstname} #{curr_runner.lastname}</title>\n\t\t<meta charset=\"utf-8\" />\n\t\t<link rel = \"stylesheet\" href = \"stylesheet.css\"/>\n\t</head>\n\t<body>\n\t\t<h1>#{curr_runner.firstname} #{curr_runner.lastname}</h1>\n\t\t<div class = \"crossCountry\">\n\t\t\t<div>\n\t\t\t\t<h2>Cross Country</h2>\n\t\t\t</div>\n\t\t\t<div>\n\t\t\t\t<table>\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<th>Race</th>\n\t\t\t\t\t\t<th>Date</th>\n\t\t\t\t\t\t<th>Distance</th>\n\t\t\t\t\t\t<th>Time</th>\n\t\t\t\t\t</tr>")
 	   
-	   curr_runner.xctimes.each do |race|	curr_file.syswrite("\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t<a href = \"#{race.link}\">#{race.name}</a></td>\n\t\t\t\t\t\t<td>#{race.date}</td>\n\t\t\t\t\t\t<td>#{race.distance}</td>\n\t\t\t\t\t\t<td>#{race.time}</td>\n\t\t\t\t\t</tr>")
+	   curr_runner.xctimes.each do |race|	
+	   curr_file.syswrite("\n\t\t\t\t\t<tr>\n\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t<a href = \"#{race.link}\">#{race.name}</a></td>\n\t\t\t\t\t\t<td>#{race.date}</td>\n\t\t\t\t\t\t<td>#{race.distance}</td>\n\t\t\t\t\t\t<td>#{race.time}</td>\n\t\t\t\t\t</tr>")
 	   end
 	   
 	   curr_file.syswrite("\n\t\t\t\t</table>\n\t\t\t</div>\n\t\t</div>\n\t</body>\n</html>")
@@ -95,3 +109,6 @@ team.each do |curr_runner|
 	end
 	
 end
+
+index_file.syswrite("\n\t\t</table>\n\t</body>\n</html>")
+index_file.close
